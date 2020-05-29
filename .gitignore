@@ -1,0 +1,74 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# .Net Core Project
+bin
+obj
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vs
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Ignore NuGet Packages
+*.nupkg
+
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+# Ignore other intermediate files that NuGet might create. project.lock.json is used in conjunction
+# with project.json (NuGet v3); project.assets.json is used in conjunction with the PackageReference
+# format (NuGet v4 and .NET Core).
+project.lock.json
+project.assets.json

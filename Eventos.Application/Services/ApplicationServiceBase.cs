@@ -23,14 +23,14 @@ namespace Eventos.Application.Services
             _serviceBase.Add(obj);
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _serviceBase.GetById(id);
+            return await _serviceBase.GetByIdAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _serviceBase.GetAll();
+            return await _serviceBase.GetAllAsync();
         }
 
         public void Update(TEntity obj)

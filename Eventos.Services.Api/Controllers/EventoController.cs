@@ -7,6 +7,7 @@ using Eventos.Services.Api.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eventos.Services.Api.Controllers
 {
@@ -28,8 +29,7 @@ namespace Eventos.Services.Api.Controllers
         {
             try
             {
-                //var eventos = await _eventoApplicationService.GetAllEventoAsync(true);
-                var eventos = _eventoApplicationService.GetAll();
+                var eventos = await _eventoApplicationService.GetAllEventoAsync(true);
 
                 var results = _mapper.Map<IEnumerable<EventoViewModel>>(eventos);
                 return Ok(results);

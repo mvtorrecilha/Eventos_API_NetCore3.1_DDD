@@ -23,14 +23,14 @@ namespace Eventos.Domain.Services.Services
             _repository.Add(obj);
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync (int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetByIdAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
 
         public void Update(TEntity obj)

@@ -25,14 +25,14 @@ namespace Eventos.Infra.Data.Repositories
             _context.Set<TEntity>().Add(obj);
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _context.Set<TEntity>().ToList();
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
         public void Update(TEntity obj)

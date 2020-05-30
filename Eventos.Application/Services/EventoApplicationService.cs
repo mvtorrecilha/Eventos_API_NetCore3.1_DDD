@@ -1,6 +1,8 @@
 ﻿using Eventos.Application.Interfaces;
 using Eventos.Domain.Core.Interfaces.Services;
 using Eventos.Domain.Entities.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Eventos.Application.Services
 {
@@ -12,6 +14,11 @@ namespace Eventos.Application.Services
             : base(eventoService)
         {
             _eventoService = eventoService;
+        }
+
+        public async Task<IEnumerable<Evento>> GetAllEventoAsync(bool includePalestrantes = false)
+        {
+            return await _eventoService.GetAllEventoAsync(includePalestrantes);
         }
     }
 }

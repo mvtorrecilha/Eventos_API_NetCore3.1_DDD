@@ -10,8 +10,8 @@ namespace Eventos.Application.Interfaces
     public interface IApplicationServiceBase<TEntity> where TEntity : class
     {
         void Add(TEntity obj);
-        TEntity GetById(int id);
-        IEnumerable<TEntity> GetAll();
+        Task<TEntity> GetByIdAsync(int id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
         void Update(TEntity obj);
         void Remove(TEntity obj);
         //void DeleteRange<TEntity>(TEntity[] entityArray);

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         }
 
         [Fact]
-        public async Task EventosController_ObterListaEventos_RetornarJsonComSucesso()
+        public async Task EventoController_ObterListaEventos_RetornarJsonComSucesso()
         {
             // Arrange & Act
             var response = await Environment.Client.GetAsync("api/evento");
@@ -30,7 +31,19 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         }
 
         [Fact]
-        public async Task EventosController_RegistrarNovoEvento_RetornarComSucesso()
+        public async Task EventoController_RetornarEventoIdIgualUm_RetornarJsonComSucesso()
+        {
+            // Arrange & Act
+            var response = await Environment.Client.GetAsync("api/evento/1");
+            var responseEvento = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            Assert.NotEmpty(responseEvento);
+        }
+
+        [Fact]
+        public async Task EventoController_RegistrarNovoEvento_RetornarComSucesso()
         {
             // Arrange
             var evento = new EventoViewModel

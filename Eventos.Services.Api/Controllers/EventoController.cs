@@ -44,12 +44,29 @@ namespace Eventos.Services.Api.Controllers
             }
         }
 
+        [HttpGet("{EventoId}")]
+        public async Task<ActionResult> Get(int EventoId)
+        {
+            try
+            {
+                var evento = await _eventoApplicationService.GetByIdAsync(EventoId);
+
+                var results = _mapper.Map<EventoViewModel>(evento);
+
+                return Ok(results);
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {ex.Message}");
+            }
+        }
+
         [HttpGet("getByTema/{tema}")]
         public async Task<ActionResult> Get(string tema)
         {
             try
             {
-                var eventos = await _eventoApplicationService.GetAllEventoAsync(true);
+                var eventos = await _eventoApplicationService.GetWhereAsync(p=>p.Tema.Equals(tema));
 
                 var results = _mapper.Map<IEnumerable<EventoViewModel>>(eventos);
 

@@ -45,10 +45,10 @@ namespace Eventos.Infra.Data.Repositories
             _context.Set<TEntity>().Remove(obj);
         }
 
-        //public void DeleteRange<TEntity>(TEntity[] entityArray)
-        //{
-        //    _context.RemoveRange(entityArray);
-        //}
+        public void DeleteRange(TEntity[] entityArray)
+        {
+            _context.RemoveRange(entityArray);
+        }
 
         public async Task<bool> SaveChangesAsync()
         {

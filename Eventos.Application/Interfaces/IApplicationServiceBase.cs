@@ -14,7 +14,7 @@ namespace Eventos.Application.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync();
         void Update(TEntity obj);
         void Remove(TEntity obj);
-        //void DeleteRange<TEntity>(TEntity[] entityArray);
+        void DeleteRange(TEntity[] entityArray);
         Task<bool> SaveChangesAsync();
         IQueryable<TEntity> FindAll();
         IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression);

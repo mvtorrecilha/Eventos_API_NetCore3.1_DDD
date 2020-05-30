@@ -43,10 +43,10 @@ namespace Eventos.Application.Services
             _serviceBase.Remove(obj);
         }
 
-        //public void DeleteRange<TEntity>(TEntity[] entityArray)
-        //{
-        //    _context.RemoveRange(entityArray);
-        //}
+        public void DeleteRange(TEntity[] entityArray)
+        {
+            _serviceBase.DeleteRange(entityArray);
+        }
 
         public async Task<bool> SaveChangesAsync()
         {

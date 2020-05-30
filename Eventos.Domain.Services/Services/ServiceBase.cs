@@ -43,10 +43,10 @@ namespace Eventos.Domain.Services.Services
             _repository.Remove(obj);
         }
 
-        //public void DeleteRange<TEntity>(TEntity[] entityArray)
-        //{
-        //    _context.RemoveRange(entityArray);
-        //}
+        public void DeleteRange(TEntity[] entityArray)
+        {
+            _repository.DeleteRange(entityArray);
+        }
 
         public async Task<bool> SaveChangesAsync()
         {

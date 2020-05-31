@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Eventos.Domain.Entities.Entities;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Net;
 
 namespace Eventos.Services.Api.Controllers
 {

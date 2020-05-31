@@ -37,7 +37,7 @@ namespace Eventos.Services.Api
         {
             services.AddDbContext<EventosContext>(options =>
             {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddAutoMapper(typeof(Startup));

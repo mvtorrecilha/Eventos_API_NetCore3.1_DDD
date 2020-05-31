@@ -20,10 +20,18 @@ namespace Eventos.Services.Api
    
     public class StartupTest
     {
-        public StartupTest(IConfiguration configuration, IWebHostEnvironment env)
+        public StartupTest(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            //Configuration = configuration;
             _env = env;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -42,7 +50,7 @@ namespace Eventos.Services.Api
 
             services.AddDbContext<EventosContext>(options =>
             {
-                options.UseSqlite(@"Data Source=E:\Estudos\Git\Eventos\Eventos.Services.Api\EventosDb.db");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
 

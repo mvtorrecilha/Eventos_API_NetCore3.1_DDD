@@ -74,11 +74,11 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
             // Arrange
             var evento = new EventoViewModel
             {
-                Local = "Nova Andradina SP",
-                DataEvento = DateTime.Now.AddDays(20).ToString(),
-                Tema = "Asp.Net Core 3.1",
+                Local = "Campo Grande MS",
+                DataEvento = DateTime.Now.AddDays(15).ToString(),
+                Tema = "Unit tests",
                 QtdPessoas =50,
-                ImageURL = "core.png",
+                ImageURL = "unit.png",
                 Telefone = "(19) 9854-3285",
                 Email = "cursos@dotnet.com"
             };

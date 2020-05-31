@@ -18,14 +18,8 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         {
             Server = new TestServer(
               new WebHostBuilder()
-                .UseEnvironment("Development")
-                .UseContentRoot(@"E:\Estudos\Git\Eventos\Eventos.Services.Api")               
+                .UseEnvironment("Testing")           
                 .UseUrls("http://localhost:5000")
-                .UseConfiguration(new ConfigurationBuilder()
-                                    .SetBasePath(@"E:\Estudos\Git\Eventos\Eventos.Services.Api")
-                                    .AddJsonFile("appsettings.json")
-                                    .Build()
-                                )
                 .UseStartup<StartupTest>());
 
             Client = Server.CreateClient();

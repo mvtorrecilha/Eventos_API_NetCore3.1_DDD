@@ -27,21 +27,7 @@ namespace Eventos.Tests.ApiTest.UnitTests.Data
                 Email = "cursos@dotnet.com"
             };
         }
-
-        public EventoViewModel GetInvalidoEvento()
-        {
-            return new EventoViewModel
-            {
-                Local = "Lo",
-                DataEvento = DateTime.Now.AddDays(10).ToString(),
-                QtdPessoas = 50,
-                ImageURL = "xunit.png",
-                Telefone = "(19) 9854-3285",
-                Email = "cursos@dotnet.com"
-            };
-        }
-
-
+       
         public IEnumerable<EventoViewModel> GetAllEventos()
         {
             return new List<EventoViewModel>()

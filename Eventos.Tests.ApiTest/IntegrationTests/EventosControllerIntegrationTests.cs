@@ -28,11 +28,12 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
             Assert.NotEmpty(responseEvento);
         }
 
-        [Fact]
-        public async Task EventoController_RetornarEventoIdIgualUm_RetornarJsonComSucesso()
+        [Theory]
+        [InlineData(1)]
+        public async Task EventoController_RetornarEventoPorId_RetornarJsonComSucesso(int eventoId)
         {
             // Arrange & Act
-            var response = await Environment.Client.GetAsync("api/evento/1");
+            var response = await Environment.Client.GetAsync("api/evento/" + eventoId);
             var responseEvento = await response.Content.ReadAsStringAsync();
 
             // Assert

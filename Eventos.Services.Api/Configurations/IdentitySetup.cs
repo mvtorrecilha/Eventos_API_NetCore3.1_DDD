@@ -1,4 +1,5 @@
-﻿using Eventos.Infra.CrossCutting.Identity.Data;
+﻿using Eventos.Infra.CrossCutting.Identity.Authorization;
+using Eventos.Infra.CrossCutting.Identity.Data;
 using Eventos.Infra.CrossCutting.Identity.Models;
 using Eventos.Infra.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +18,7 @@ namespace Eventos.Services.Api.Configurations
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-           
+            services.Configure<JwtAuthentication>(options => configuration.GetSection("JwtAuthentication").Bind(options));
             IdentityBuilder builder = services.AddIdentityCore<User>(options =>
             {
                 options.Password.RequireDigit = false;

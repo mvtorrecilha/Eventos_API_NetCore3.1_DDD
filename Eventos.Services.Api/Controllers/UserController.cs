@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Eventos.Infra.CrossCutting.Identity.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace Eventos.Services.Api.Controllers
 {
@@ -22,19 +24,19 @@ namespace Eventos.Services.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly JwtAuthentication _jwtAuthentication;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IMapper _mapper;
 
-        public UserController(IConfiguration config,
+        public UserController(IOptions<JwtAuthentication> jwtAuthentication,
                               UserManager<User> userManager,
                               SignInManager<User> signInManager,
                               IMapper mapper)
         {
+            _jwtAuthentication = jwtAuthentication.Value;
             _signInManager = signInManager;
             _mapper = mapper;
-            _config = config;
             _userManager = userManager;
         }
 
@@ -117,8 +119,8 @@ namespace Eventos.Services.Api.Controllers
             }
 
             var key = new SymmetricSecurityKey(Encoding.ASCII
-                .GetBytes(_config.GetSection("AppSettings:Token").Value));
-
+                .GetBytes(_jwtAuthentication.Token));
+            
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor

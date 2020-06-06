@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
-using Eventos.Infra.CrossCutting.IoC;
-using Eventos.Infra.Data.Context;
+using Eventos.Services.Api.Configurations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Eventos.Services.Api
 {
@@ -22,7 +20,6 @@ namespace Eventos.Services.Api
     {
         public StartupTest(IWebHostEnvironment env)
         {
-            //Configuration = configuration;
             _env = env;
 
             var builder = new ConfigurationBuilder()
@@ -43,20 +40,21 @@ namespace Eventos.Services.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<EventosContext>(options =>
-            //{
-            //    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            //});
+            // Setting DBContexts
+            services.AddDatabaseSetup(Configuration);
 
-            services.AddDbContext<EventosContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            // ASP.NET Identity Settings & JWT
+            services.AddIdentitySetup(Configuration);
 
-
+            // AutoMapper Settings
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddMvc()
+            services.AddMvc(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                .AddNewtonsoftJson(o =>
                {
@@ -65,9 +63,11 @@ namespace Eventos.Services.Api
 
             services.AddCors();
 
+            // WebAPI Config
             services.AddControllers();
 
-            NativeInjectorBootStrapper.RegisterServices(services);
+            // .NET Native DI Abstraction
+            services.AddDependencyInjectionSetup();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,20 +83,30 @@ namespace Eventos.Services.Api
                 app.UseHsts();
             }
 
-            // app.UseHttpsRedirection();
-
             app.UseRouting();
 
             //app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseStaticFiles();
-            // app.UseMvc();
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
+
+            app.UseSwaggerSetup();
         }
 
     }

@@ -19,8 +19,16 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         [Fact]
         public async Task EventoController_ObterListaEventos_RetornarJsonComSucesso()
         {
-            // Arrange & Act
-            var response = await Environment.Client.GetAsync("api/evento");
+            // Arrange
+            var tokenUser = await UserUtils.RealizarLogin(Environment.Client);
+
+            // Act
+            var response = await Environment.Server
+                .CreateRequest("api/evento")
+                .AddHeader("Content-Type", "application/json")
+                .AddHeader("Authorization", "Bearer " + tokenUser)
+                .GetAsync();
+
             var responseEvento = await response.Content.ReadAsStringAsync();
 
             // Assert
@@ -32,8 +40,16 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         [InlineData(1)]
         public async Task EventoController_RetornarEventoPorId_RetornarJsonComSucesso(int eventoId)
         {
+            // Arrange
+            var tokenUser = await UserUtils.RealizarLogin(Environment.Client);
+
             // Arrange & Act
-            var response = await Environment.Client.GetAsync("api/evento/" + eventoId);
+            var response = await Environment.Server
+                .CreateRequest("api/evento/" + eventoId)
+                .AddHeader("Content-Type", "application/json")
+                .AddHeader("Authorization", "Bearer " + tokenUser)
+                .GetAsync();
+
             var responseEvento = await response.Content.ReadAsStringAsync();
 
             // Assert
@@ -45,6 +61,8 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         public async Task EventoController_RegistrarNovoEvento_RetornarBadRequest()
         {
             // Arrange
+            var tokenUser = await UserUtils.RealizarLogin(Environment.Client);
+
             var evento = new EventoViewModel
             {
                 Local = "N",
@@ -53,11 +71,12 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
                 ImageURL = "core.png",
                 Telefone = "(19) 9854-3285",
                 Email = "cursos@dotnet.com"
-            };
+            };        
 
             // Act
             var response = await Environment.Server
                 .CreateRequest("api/evento")
+                .AddHeader("Authorization", "Bearer " + tokenUser)
                 .And(
                     request =>
                         request.Content =
@@ -73,13 +92,15 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
         public async Task EventoController_RegistrarNovoEvento_RetornarComSucesso()
         {
             // Arrange
+            var tokenUser = await UserUtils.RealizarLogin(Environment.Client);
+
             var evento = new EventoViewModel
             {
-                Local = "Campo Grande MS",
+                Local = "Ivinhema MS",
                 DataEvento = DateTime.Now.AddDays(15).ToString(),
-                Tema = "Unit tests",
+                Tema = "Identity Core",
                 QtdPessoas =50,
-                ImageURL = "unit.png",
+                ImageURL = "identity.png",
                 Telefone = "(19) 9854-3285",
                 Email = "cursos@dotnet.com"
             };
@@ -87,6 +108,7 @@ namespace Eventos.Tests.ApiTest.IntegrationTests
             // Act
             var response = await Environment.Server
                 .CreateRequest("api/evento")
+                .AddHeader("Authorization", "Bearer " + tokenUser)
                 .And(
                     request =>
                         request.Content =

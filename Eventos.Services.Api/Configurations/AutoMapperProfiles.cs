@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Eventos.Domain.Entities.Entities;
+using Eventos.Infra.CrossCutting.Identity.Models;
 using Eventos.Services.Api.ViewModels;
 using System.Linq;
 
-namespace Eventos.Services.Api.Helpers
+namespace Eventos.Services.Api.Configurations
 {
     public class AutoMapperProfiles : Profile
     {
@@ -24,8 +25,8 @@ namespace Eventos.Services.Api.Helpers
             CreateMap<Lote, LoteViewModel>().ReverseMap();
             CreateMap<RedeSocial, RedeSocialViewModel>().ReverseMap();
 
-            //CreateMap<User, UserDto>().ReverseMap();
-            //CreateMap<User, UserLoginDto>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, UserLoginViewModel>().ReverseMap();
         }
     }
 }

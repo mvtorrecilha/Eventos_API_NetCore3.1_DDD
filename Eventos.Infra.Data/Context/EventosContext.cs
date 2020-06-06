@@ -16,22 +16,6 @@ namespace Eventos.Infra.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<UserRole>(userRole =>
-            //{
-            //    userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
-
-            //    userRole.HasOne(ur => ur.Role)
-            //        .WithMany(r => r.UserRoles)
-            //        .HasForeignKey(ur => ur.RoleId)
-            //        .IsRequired();
-
-            //    userRole.HasOne(ur => ur.User)
-            //        .WithMany(r => r.UserRoles)
-            //        .HasForeignKey(ur => ur.UserId)
-            //        .IsRequired();
-            //}
-            //);
-
             //Relacionamento N para N -> Palestrante_Evento
             modelBuilder.Entity<PalestranteEvento>().
             HasKey(PE => new { PE.EventoId, PE.PalestranteId });

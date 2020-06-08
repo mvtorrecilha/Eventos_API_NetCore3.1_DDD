@@ -109,31 +109,6 @@ namespace Eventos.Services.Api.Controllers
                 var evento = await _eventoApplicationService.GetByIdAsync(EventoId);
                 if (evento == null) return NotFound();
 
-                var idLotes = new List<int>();
-                var idRedesSociais = new List<int>();
-
-                if (model.Lotes != null && model.Lotes.Count > 0)
-                {
-                    model.Lotes.ForEach(item => idLotes.Add(item.Id));
-
-                    var lotes = evento.Lotes.Where(
-                                                lote => !idLotes.Contains(lote.Id)
-                                            ).ToArray();
-
-                   // if (lotes.Length > 0) _eventoApplicationService.DeleteRange(lotes);
-                }
-
-                if (model.RedesSociais != null && model.RedesSociais.Count > 0)
-                {
-                    model.RedesSociais.ForEach(item => idRedesSociais.Add(item.Id));
-
-                    var redesSociais = evento.RedesSociais.Where(
-                        rede => !idLotes.Contains(rede.Id)
-                        ).ToArray();
-
-                   // if (redesSociais.Length > 0) _eventoApplicationService.DeleteRange(redesSociais);
-                }
-
                 _mapper.Map(model, evento);
 
                 _eventoApplicationService.Update(evento);

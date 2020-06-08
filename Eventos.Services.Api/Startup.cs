@@ -78,7 +78,7 @@ namespace Eventos.Services.Api
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
